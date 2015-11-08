@@ -1,3 +1,4 @@
 .git/
-/_sh
+git_pull.sh
+git_push.sh
 /node_modules/
