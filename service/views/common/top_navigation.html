@@ -1,0 +1,71 @@
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <a class="navbar-brand">Database</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li>
+                    <form role="search" class="navbar-form-custom" method="post">
+                        <div class="form-group">
+                            <input type="text" placeholder="start searching" class="form-control" name="top-search" id="top-search" style="height:50px" ng-model="searchTerm" ng-enter="gotopage('/search/'+searchTerm)">
+                        </div>
+                    </form>
+                </li>
+            <!--
+                <li class="active">
+                    <a ui-sref="layouts" href="#" > Back to main Layout page </a>
+                </li>
+                <li class="dropdown" dropdown>
+                    <a class="dropdown-toggle" href dropdown-toggle> Menu item <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" dropdown>
+                    <a class="dropdown-toggle" href dropdown-toggle> Menu item <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" dropdown>
+                    <a class="dropdown-toggle" href dropdown-toggle> Menu item <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" dropdown>
+                    <a class="dropdown-toggle" href dropdown-toggle> Menu item <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                        <li><a href="#">Menu item</a></li>
+                    </ul>
+                </li>
+            -->
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
+                <li ng-click="gotopage('/search')"><a><i class="fa fa-search"></i> Search</a></li>
+                <li ng-click="gotopage('/order/mine')"><a><i class="fa fa-tasks"></i> Orders</a></li>
+                
+                <li ng-click="gotopage('/song/new')" ng-if="session.is_login && session.user.account_type < 2"><a><i class="fa fa-plus"></i> New Song</a></li>
+                
+                <li ng-click="gotopage('/login')" ng-show="!session.is_login"><a><i class="fa fa-sign-in"></i> Login</a></li>
+                <li ng-click="logout()" ng-show="session.is_login"><a><i class="fa fa-sign-out"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>

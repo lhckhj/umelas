@@ -1,0 +1,157 @@
+<div class="wrapper wrapper-content animated bounce" ng-controller="SongController">
+    <div class="row">
+    
+        <div class="col-md-12">
+            
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="pull-left">
+                        <div class="dropdown" ng-show="this_song.basekey!=''">
+                          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{this_song.thiskey}}
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li ng-repeat="key in list_of_keys">
+                                <a ng-click="changeKey(key[1],this_song)">{{key[0]}}</a>
+                            </li>
+                          </ul>
+                          <button type="button" class="btn btn-primary" ng-show="prefer_sharps_flats==0 && thiskey_has_sharp_flat==true" ng-click="toggle_sharps_flats(1,this_song);"><i>#</i></button>
+                          <button type="button" class="btn btn-primary" ng-show="prefer_sharps_flats==1 && thiskey_has_sharp_flat==true" ng-click="toggle_sharps_flats(0,this_song);"><i>b</i></button>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary" ng-click="add_to_order()"><i class="fa fa-plus"></i></button>
+                        
+                        <button type="button" class="btn btn-primary" ng-if="session.is_login && session.user.account_type < 2" ng-hide="is_edit" ng-click="edit_song(true)"><i class="fa fa-pencil"></i> Edit</button>
+                        
+                    </div>
+                    <div class="text-center article-title">
+                        <h1><span ng-bind="this_song.title" style="margin: 40px 0 40px 0;"></span><span ng-show="this_song.thiskey" ng-bind="' ('+this_song.thiskey+')'"></span></h1>
+                    </div>
+                    
+                    <div class="row">
+                        <div ng-bind-html="this_song.body"></div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="col-md-4" ng-show="this_song.metadata">
+            <div class="wrapper wrapper-content project-manager">
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="text-align:center;"><h2>{{this_song.title}}</h2></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-show="this_song.metadata['Original Key(s)']">
+                        <th>Original Key(s)</th>
+                        <td><span ng-repeat="key in this_song.metadata['Original Key(s)']">{{key}}<br/></span></td>
+                      </tr>
+                      <tr ng-show="this_song.metadata['Recommended Key(s)']">
+                        <th>Recommended Key(s)</th>
+                        <td><span ng-repeat="key in this_song.metadata['Recommended Key(s)']">{{key}}<br/></span></td>
+                      </tr>
+                      <tr ng-show="this_song.metadata['Key Range']">
+                        <th>Key Range</th>
+                        <td><span ng-repeat="key in this_song.metadata['Key Range']">{{key}}</span></td>
+                      </tr>
+                      <tr ng-show="this_song.metadata['BPM']">
+                        <th>BPM</th>
+                        <td><span ng-repeat="beat in this_song.metadata['BPM']">{{beat}}</span></td>
+                      </tr>
+                      <tr ng-show="this_song.metadata['Tempo']">
+                        <th>Tempo</th>
+                        <td><span ng-repeat="temp in this_song.metadata['Tempo']">{{temp}}</span></td>
+                      </tr>
+                      <tr ng-show="this_song.metadata['Theme(s)']">
+                        <th>Theme(s)</th>
+                        <td><span ng-repeat="theme in this_song.metadata['Theme(s)']">{{theme}}<br/></span></td>
+                      </tr>
+                      <tr ng-show="this_song.metadata['Scripture Reference(s)']">
+                        <th>Scripture Reference(s)</th>
+                        <td>
+                          <span ng-repeat="ref in this_song.metadata['Scripture Reference(s)']"><a href="https://www.biblegateway.com/passage/?search={{ref}}&version=NIV" target="_blank">{{ref}}</a><br/></span>
+                        </td>
+                      </tr>
+                      <tr ng-show="this_song.mp3">
+                        <td colspan="2">
+                            
+                            <button type="button" class="btn btn-primary" ng-click="play_music()" play-all="songs" ng-show="!isPlaying" style="width:100%"><i class="glyphicon glyphicon-play"></i> {{this_song.title}} <i class="glyphicon glyphicon-music"></i></button>
+
+                            <table width="100%" ng-show="isPlaying"><tr>
+                            <td>
+                                <sound-manager></sound-manager>
+                                
+                                <div class="progress progress-striped active" seek-track style="margin-bottom:0px;">
+                                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( progress + '%' ) }" style="color:#000;">
+                                    ({{ currentPostion }} / {{ currentDuration }})
+                                  </div>
+                                </div>
+
+                            </td>
+                            <td width="50px"><center>
+                                <button type="button" class="btn btn-primary" play-all="songs" ng-show="!isPlaying"><i class="glyphicon glyphicon-play"></i></button>
+                                <button type="button" class="btn btn-primary" stop-music ng-show="isPlaying"><i class="glyphicon glyphicon-stop"></i></button>
+                            </center></td>
+                            </tr></table>
+                            
+                        </td>
+                      </tr>
+                      <tr ng-show="this_song.metadata['editedby']">
+                        <td colspan="2">
+                          Last edited by {{this_song.metadata.editedby}} on {{this_song.metadata.editedon | date:"dd/MM/yyyy, h:mma"}}
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                  
+            </div>
+        </div>
+        
+        <div class="col-md-8" ng-show="is_edit" ng-if="session.user.account_type < 2">
+            
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>{{this_song.title == "" ? "Firstly, enter song title and select base key..." : "Editing: "+this_song.title }}</h3>
+                    
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Song Title" ng-model="this_song.title"/>
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-primary" tabindex="-1">{{this_song.basekey}}</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li ng-repeat="(key,value) in keys_to_num">
+                            <a ng-click="changeBaseKey(key)" ng-bind="key"></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div><br/>
+                    
+                    <div ng-show="this_song.basekey">
+                        <p>
+                            <a class="btn btn-warning btn-xs btn-rounded" ng-click="edit_add_part('_I:')">Intro</a>
+                            <a class="btn btn-primary btn-xs btn-rounded" ng-click="edit_add_part('_V:')">Verse</a>
+                            <a class="btn btn-success btn-xs btn-rounded" ng-click="edit_add_part('_P:')">Pre-Chorus</a>
+                            <a class="btn btn-success btn-xs btn-rounded" ng-click="edit_add_part('_C:')">Chorus</a>
+                            <a class="btn btn-info btn-xs btn-rounded" ng-click="edit_add_part('_B:')">Bridge</a>
+                            <a class="btn btn-warning btn-xs btn-rounded" ng-click="edit_add_part('_R:')">Refrain</a>
+                        </p>
+                        
+                        <textarea class="form-control" id="song_raw" rows="{{this_song.lines_count}}" ng-model="this_song.raw" placeholder="Song lyrics and chords" ng-change="change_lyrics()" ng-model-options="{debounce: 1000}"></textarea><br/>
+                        <button type="button" class="btn btn-info btn-block" ng-click="updateSong()">Update</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="SearchController">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <h2 ng-show="!found_nothing">
+                        <span ng-bind="all_searched_songs.length"></span> results found for <span ng-show="search_type==1">lyrics containing the word</span><span ng-show="search_type==2">song titles containing the word</span>: <span class="text-navy" ng-bind="searchterms"></span>
+                    </h2>
+                    <h2 ng-show="found_nothing">
+                        Start searching <span ng-show="search_type==1">the lyrics</span><span ng-show="search_type==2">song titles</span>...
+                    </h2>
+                    
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="searchTerm" ng-enter="search_songs(searchTerm)">
+                        
+                        <div class="input-group-btn" dropdown>
+                            <button class="btn btn-white dropdown-toggle" dropdown-toggle type="button">
+                                <span ng-show="search_type==1">Search Lyrics</span>
+                                <span ng-show="search_type==2">Search Titles</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a ng-click="change_search_type(1);">Search Lyrics</a></li>
+                                <li><a ng-click="change_search_type(2);">Search Title</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div ng-repeat="song in all_searched_songs">
+                        <div class="hr-line-dashed"></div>
+                        <div class="search-result">
+                            <button type="button" class="btn btn-info btn-block" style="float:right;width:40px;margin-left:5px;z-index:10;" title="Add to Order" ng-click="add_to_order(song)"><i class="search-icon glyphicon glyphicon-plus"></i></button>
+                            <h3 ng-click="gotopage('/song/'+song._id)"><a ng-bind="song.title"></a></h3>
+                            <!-- <a href="" class="search-link">www.inspinia.com/inspinia</a> -->
+                            <p ng-bind-html="song.subset_lyrics"></p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

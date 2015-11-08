@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="inspinia">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <meta name="description" content="">
+    <meta name="keywords" content="worship music song hymn order church">
+    
+    <!-- Page title set in pageTitle directive -->
+    <title page-title id="id_pagetitle">Service</title>
+    <!-- Bootstrap -->
+    <link href="common/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font awesome -->
+    <link href="common/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- Main Inspinia CSS files -->
+    <link href="common/inspinia/css/animate.css" rel="stylesheet">
+
+    <link href="common/inspinia/css/style.css" rel="stylesheet" id="loadBefore">
+    <link href="css/custom_style.css" rel="stylesheet">
+</head>
+
+<!-- ControllerAs syntax -->
+<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
+<body ng-controller="GlobalVarsCtrl as main" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
+
+<div id="div_loading_container" ng-style="div_loading_container" style="display:none;position:fixed;width:100%;height:100%;margin:0;z-index:10;"><div style="position:relative;top: 50%;transform:translateY(-50%);width:100px;height:50px;margin:0 auto;background-color:rgba(0,0,0,0.5);text-align:center;border-radius: 15px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="margin-top:10px;font-size:30px;color:#fff;"></span></div></div>
+<div id="div_ok_container" ng-style="div_ok_container" style="display:none;position:fixed;width:100%;height:100%;margin:0;z-index:10;color:#fff;"><div style="position:relative;top: 50%;transform:translateY(-50%);width:120px;height:70px;margin:0 auto;background-color:rgba(0,0,0,0.5);text-align:center;border-radius: 15px;"><span class="glyphicon glyphicon-ok" style="margin-top:10px;font-size:30px;"></span><br/>Added to Order</div></div>
+
+<!-- Main view  -->
+<div ui-view></div>
+
+<div class="small-chat-box ng-small-chat fadeInRight animated" ng-show="openChat" style="height:100px" ng-controller="MusicplayerController">
+    <div class="heading">
+        <span ng-show="!isPlaying">Music Player</span>
+        <span ng-show="isPlaying" ng-bind="'Playing '+songs[0].title"></span>
+    </div>
+    <div class="content">
+        
+        <button type="button" class="btn btn-primary" play-all="songs" ng-show="!isPlaying && songs[0].url!='http'" style="width:100%"><i class="glyphicon glyphicon-play"></i> {{songs[0].title}}</button>
+
+        <table width="100%" ng-show="isPlaying">
+        <tr>
+            <td>
+                <sound-manager></sound-manager>
+                
+                <div class="progress progress-striped active" seek-track style="margin-bottom:0px;">
+                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( progress + '%' ) }" style="color:#000;">
+                    ({{ currentPostion }} / {{ currentDuration }})
+                  </div>
+                </div>
+    
+            </td>
+            <td width="50px"><center>
+                <button type="button" class="btn btn-primary" play-all="songs" ng-show="!isPlaying"><i class="glyphicon glyphicon-play"></i></button>
+                <button type="button" class="btn btn-primary" stop-music ng-show="isPlaying"><i class="glyphicon glyphicon-stop"></i></button>
+            </center></td>
+        </tr>
+        </table>
+        
+    </div>
+</div>
+<div id="small-chat" ng-click="openChat = !openChat" ng-show="isPlaying || songs[0].url!='http'">
+    <a class="open-small-chat"><i class="fa fa-music"></i></a>
+</div>
+
+<!-- jQuery and Bootstrap -->
+<script src="common/inspinia/js/jquery/jquery-2.1.1.min.js"></script>
+<script src="common/inspinia/js/plugins/jquery-ui/jquery-ui.js"></script>
+<script src="common/inspinia/js/bootstrap/bootstrap.min.js"></script>
+
+<!-- MetsiMenu -->
+<script src="common/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+<!-- SlimScroll -->
+<script src="common/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Peace JS -->
+<script src="common/inspinia/js/plugins/pace/pace.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="common/inspinia/js/inspinia.js"></script>
+
+
+
+<!-- Main Angular scripts-->
+<script src="common/inspinia/js/angular/angular.min.js"></script>
+<script src="common/inspinia/js/angular/angular-sanitize.js"></script>
+<script src="common/inspinia/js/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
+<script src="common/inspinia/js/angular-translate/angular-translate.min.js"></script>
+<script src="common/inspinia/js/ui-router/angular-ui-router.min.js"></script>
+<script src="common/inspinia/js/bootstrap/ui-bootstrap-tpls-0.12.0.min.js"></script>
+<script src="common/inspinia/js/plugins/angular-idle/angular-idle.js"></script>
+<script src="common/js/ngStorage.js"></script>
+<script src="js/angular-soundmanager2.min.js"></script>
+
+<!-- Anglar App Script -->
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="common/inspinia/js/translations.js"></script>
+<script src="common/inspinia/js/directives.js"></script>
+<script src="js/controllers.js"></script>
+
+</body>
+</html>

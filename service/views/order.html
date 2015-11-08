@@ -1,0 +1,19 @@
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="OrderController">
+    <div class="row" id="sortable-view">
+        <div class="col-md-12 connectPanels" ui-sortable="sortableOptions">
+            <div class="ibox" ng-repeat="this_song in session.songs track by $index" ng-init="parentIndex = $index">
+                <div class="ibox-title">
+                    <h5 ng-bind="this_song.title + ' ('+this_song.thiskey+')'"></h5>
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div ng-bind-html="this_song.body" id="lyrics_chords"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>

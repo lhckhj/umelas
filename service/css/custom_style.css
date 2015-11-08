@@ -1,0 +1,29 @@
+/* for chords and lyrics html */
+.chorus, .verses, .bridge{
+    padding-bottom: 20px;
+    font-size: 15px;
+}
+.chorus{
+    color:#800;
+}
+.lyric {
+  line-height:15px;
+  margin-top:2em;
+  white-space:pre;
+}
+.chord { 
+    position: absolute
+ }
+.chord .inner {
+    position: relative;
+    top: -1em;
+    text-shadow:#CCC -1px 1px;
+    font-style: italic;
+}
+.song_subtitle{
+    line-height:0px;
+}
+
+.clear_both{
+    clear:both;
+}
